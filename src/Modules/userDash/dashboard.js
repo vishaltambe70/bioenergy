@@ -157,7 +157,10 @@ function DashboardUser() {
     },
   ];
   const [listData, setListData] = useState([]);
-  console.log("liiiiii", listData);
+  const [totalGarbage, setTotalGarbage] = useState(0);
+  const [totalBioEnergy, setTotalBioEnergy] = useState(0);
+  const [total, setTotal] = useState({});
+
   useEffect(() => {
     getData();
   }, []);
@@ -169,16 +172,31 @@ function DashboardUser() {
   const getData = () => {
     const filteredUser = ADMIN_ROWS.filter((name) => name.userId === user);
     console.log("filtered user ", filteredUser);
-
+    let data = [];
     if (filteredUser[0].userId === "kamini_rathod") {
+      data = KAMINI_RATHOD;
       setListData(KAMINI_RATHOD);
     } else if (filteredUser[0].userId === "akash_rale") {
+      data = AKASH_RALE;
       setListData(AKASH_RALE);
     } else if (filteredUser[0].userId === "sarala_jain") {
+      data = SARALA_JAIN;
       setListData(SARALA_JAIN);
     } else if (filteredUser[0].userId === "vikram_singh") {
+      data = VIKRAM_SINGH;
       setListData(VIKRAM_SINGH);
     }
+
+    const totalBioEnergy = data.reduce((total, user) => {
+      return total + user.bioEnergy;
+    }, 0);
+
+    const totalGarbage = data.reduce((total, user) => {
+      return total + user.todaysGarbage;
+    }, 0);
+
+    setTotalBioEnergy(totalBioEnergy);
+    setTotalGarbage(totalGarbage);
 
     return listData;
   };
@@ -230,13 +248,13 @@ function DashboardUser() {
                   type: "spring",
                   duration: index + 0.3,
                 })}
-                animateToNumber={45544}
+                animateToNumber={totalBioEnergy}
                 fontStyle={{
                   // fontSize: 40,
                   color: "#4CAF50",
                 }}
               ></AnimatedNumbers>
-              &nbsp; kW &nbsp;&nbsp; BioEnergy Generted Today: &nbsp;&nbsp;
+              &nbsp; kW &nbsp;&nbsp; Total Garbage Collected: &nbsp;&nbsp;
               <AnimatedNumbers
                 includeComma
                 // className={styles.container}
@@ -244,7 +262,7 @@ function DashboardUser() {
                   type: "spring",
                   duration: index + 0.3,
                 })}
-                animateToNumber={330}
+                animateToNumber={totalGarbage}
                 fontStyle={{
                   // fontSize: 40,
                   color: "#4CAF50",
