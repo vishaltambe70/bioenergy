@@ -14,7 +14,10 @@ function Login() {
   // Array of user objects with username and password properties
   const users = [
     { username: "admin", password: "123" },
-    { username: "user", password: "123" },
+    { username: "akash_rale", password: "123" },
+    { username: "vikram_singh", password: "123" },
+    { username: "sarala_jain", password: "123" },
+    { username: "kamini_rathod", password: "123" },
     // Add more users as needed
   ];
 
@@ -25,8 +28,14 @@ function Login() {
     );
 
     if (matchedUser) {
-      alert("Login successful!");
-      navigate("/dashboard", { state: { user: username } });
+      if (username === "admin") {
+        navigate("/dashboard", { state: { user: username } });
+      } else {
+        let userId = 12;
+        navigate("/user-dashboard", {
+          state: { user: username, userId: userId },
+        });
+      }
     } else {
       alert("Invalid username or password. Please try again.");
     }

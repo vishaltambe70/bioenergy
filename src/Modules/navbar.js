@@ -11,8 +11,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ user }) => {
+  const navigate = useNavigate();
+
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState();
 
@@ -22,6 +25,11 @@ const Navbar = ({ user }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    navigate("/login");
   };
 
   return (
@@ -47,7 +55,7 @@ const Navbar = ({ user }) => {
               alt="My Image"
               height={"28px"}
               width={"28px"}
-              style={{ marginRight: "15px" }}
+              style={{ marginRight: "15px", marginTop: "0px" }}
             />
             Bioenergy
           </Typography>
@@ -81,8 +89,7 @@ const Navbar = ({ user }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           )}

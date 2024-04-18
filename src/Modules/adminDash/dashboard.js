@@ -1,5 +1,5 @@
-// src/DashboardUser.js
-import React, { useState, useEffect } from "react";
+// src/Dashboard.js
+import React from "react";
 import Navbar from "../navbar";
 import { useLocation } from "react-router-dom";
 import { Container, Grid, Typography } from "@mui/material";
@@ -22,84 +22,90 @@ import AnimatedNumbers from "react-animated-numbers";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {
-  ADMIN_ROWS,
-  AKASH_RALE,
-  KAMINI_RATHOD,
-  SARALA_JAIN,
-  VIKRAM_SINGH,
-} from "../../constants";
-function DashboardUser() {
+import { ADMIN_ROWS } from "../../constants";
+import { useNavigate } from "react-router-dom";
+
+function Dashboard() {
+  const navigate = useNavigate();
+
   const location = useLocation();
-  const { user, userId } = location.state || {};
+  const { user } = location.state || {};
   console.log("props", user);
 
   const columns = [
-    // {
-    //   field: "actions",
-    //   type: "actions",
-    //   headerAlign: "center",
-    //   align: "center",
-    //   headerName: "Actions",
-    //   width: 100,
-    //   cellClassName: "actions",
-    //   renderHeader: () => <strong>{"Actions "}</strong>,
-    //   getActions: (params) => {
-    //     // const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-    //     // if (isInEditMode) {
-    //     //   return [
-    //     //     <GridActionsCellItem
-    //     //       icon={<SaveIcon />}
-    //     //       label="Save"
-    //     //       sx={{
-    //     //         color: "primary.main",
-    //     //       }}
-    //     //       // onClick={handleSaveClick(id)}
-    //     //     />,
-    //     //     <GridActionsCellItem
-    //     //       icon={<CancelIcon />}
-    //     //       label="Cancel"
-    //     //       className="textPrimary"
-    //     //       // onClick={handleCancelClick(id)}
-    //     //       color="inherit"
-    //     //     />,
-    //     //   ];
-    //     // }
-
-    //     return [
-    //       <GridActionsCellItem
-    //         icon={<VisibilityIcon color={"primary"} />}
-    //         label="Edit"
-    //         className="textPrimary"
-    //         onClick={(e) => {
-    //           handleViewClick(e, params.row);
-    //         }}
-    //         color="inherit"
-    //       />,
-    //     ];
-    //   },
-    // },
     {
-      field: "date",
-      headerName: "Date",
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      width: 100,
+      headerAlign: "center",
+      align: "center",
+      cellClassName: "actions",
+      renderHeader: () => <strong>{"Actions "}</strong>,
+      getActions: (params) => {
+        // const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        // if (isInEditMode) {
+        //   return [
+        //     <GridActionsCellItem
+        //       icon={<SaveIcon />}
+        //       label="Save"
+        //       sx={{
+        //         color: "primary.main",
+        //       }}
+        //       // onClick={handleSaveClick(id)}
+        //     />,
+        //     <GridActionsCellItem
+        //       icon={<CancelIcon />}
+        //       label="Cancel"
+        //       className="textPrimary"
+        //       // onClick={handleCancelClick(id)}
+        //       color="inherit"
+        //     />,
+        //   ];
+        // }
+
+        return [
+          <GridActionsCellItem
+            icon={<VisibilityIcon color={"primary"} />}
+            label="Edit"
+            className="textPrimary"
+            onClick={(e) => {
+              handleViewClick(e, params.row);
+            }}
+            color="inherit"
+          />,
+        ];
+      },
+    },
+    {
+      field: "username",
+      headerName: "Name",
       flex: 1,
       headerAlign: "center",
       align: "center",
       minWidth: 150,
-      renderHeader: () => <strong align="center">{"Date "}</strong>,
+      renderHeader: () => <strong>{"Name "}</strong>,
     },
-
+    {
+      field: "zone",
+      headerName: "Zone",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      minWidth: 150,
+      renderHeader: () => <strong>{"Zone "}</strong>,
+    },
     {
       field: "todaysGarbage",
-      headerName: "Garbage",
+      headerName: "Todays Garbage",
       flex: 1,
       headerAlign: "center",
       align: "center",
       minWidth: 150,
       renderHeader: () => (
         <strong>
-          {"Garbage Collected "}
+          {"Todays Garbage "}
           <span role="img" aria-label="enjoy">
             (Tons)
           </span>
@@ -108,14 +114,14 @@ function DashboardUser() {
     },
     {
       field: "bioEnergy",
-      headerName: "Bioenergy",
+      headerName: "Todays Bioenergy",
       flex: 1,
       headerAlign: "center",
       align: "center",
       minWidth: 150,
       renderHeader: () => (
         <strong>
-          {"Bioenergy Generated "}
+          {"Todays Bioenergy "}
           <span role="img" aria-label="enjoy">
             (kW)
           </span>
@@ -123,68 +129,46 @@ function DashboardUser() {
       ),
     },
     {
-      field: "progress",
-      headerName: "Progress",
+      field: "totalGarbage",
+      headerName: "Total Garbage",
       flex: 1,
       headerAlign: "center",
       align: "center",
       minWidth: 150,
       renderHeader: () => (
-        <strong align="center">
-          {"Progress "}
+        <strong>
+          {"Total Garbage "}
           <span role="img" aria-label="enjoy">
-            (Level 1-6)
+            (Tons)
           </span>
         </strong>
       ),
     },
 
     {
-      field: "expectedEndDate",
-      headerName: "Expected Time",
+      field: "TotalBioEnergy",
+      headerName: "Total Bioenergy",
       flex: 1,
       headerAlign: "center",
       align: "center",
       minWidth: 150,
       renderHeader: () => (
-        <strong align="center">
-          {"Expected Time "}
+        <strong>
+          {"Total Bioenergy "}
           <span role="img" aria-label="enjoy">
-            (Days)
+            (kW)
           </span>
         </strong>
       ),
     },
   ];
-  const [listData, setListData] = useState([]);
-  console.log("liiiiii", listData);
-  useEffect(() => {
-    getData();
-  }, []);
 
   const handleViewClick = (e, params) => {
     console.log("params", params);
   };
-
-  const getData = () => {
-    const filteredUser = ADMIN_ROWS.filter((name) => name.userId === user);
-    console.log("filtered user ", filteredUser);
-
-    if (filteredUser[0].userId === "kamini_rathod") {
-      setListData(KAMINI_RATHOD);
-    } else if (filteredUser[0].userId === "akash_rale") {
-      setListData(AKASH_RALE);
-    } else if (filteredUser[0].userId === "sarala_jain") {
-      setListData(SARALA_JAIN);
-    } else if (filteredUser[0].userId === "vikram_singh") {
-      setListData(VIKRAM_SINGH);
-    }
-
-    return listData;
-  };
   return (
     <>
-      <Navbar user={user} id={userId} />
+      <Navbar user={user} id={0} />
 
       <div
         style={{
@@ -219,7 +203,7 @@ function DashboardUser() {
           {/* Content inside the container */}
           <div>
             {/* Your content goes here */}
-            <h2>Bioenergy Generation </h2>
+            <h2>Bioenergy Generation (Admin)</h2>
             <Grid sx={{ display: "flex", justifyContent: "center", m: 2 }}>
               {/* <Typography sx={{ fontSize: 20 }}> */}
               Total BioEnergy Generted: &nbsp;&nbsp;
@@ -254,7 +238,7 @@ function DashboardUser() {
             </Grid>
             <DataGrid
               columns={columns}
-              rows={listData}
+              rows={ADMIN_ROWS}
               slots={{
                 toolbar: GridToolbar,
               }}
@@ -266,4 +250,4 @@ function DashboardUser() {
   );
 }
 
-export default DashboardUser;
+export default Dashboard;
