@@ -165,6 +165,8 @@ function Dashboard() {
 
   const handleViewClick = (e, params) => {
     console.log("params", params);
+    const data = { user: params?.userId, userId: params?.userId };
+    navigate("/user", { state: data });
   };
   return (
     <>

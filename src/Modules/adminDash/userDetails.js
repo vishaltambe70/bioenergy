@@ -1,4 +1,4 @@
-// src/DashboardUser.js
+// src/UserDetails.js
 import React, { useState, useEffect } from "react";
 import Navbar from "../navbar";
 import { useLocation } from "react-router-dom";
@@ -16,7 +16,7 @@ import {
   SARALA_JAIN,
   VIKRAM_SINGH,
 } from "../../constants";
-function DashboardUser() {
+function UserDetails() {
   const location = useLocation();
   const { user, userId } = location.state || {};
   console.log("props", user);
@@ -197,7 +197,7 @@ function DashboardUser() {
   };
   return (
     <>
-      <Navbar user={user} id={userId} />
+      <Navbar />
 
       <div
         style={{
@@ -233,6 +233,7 @@ function DashboardUser() {
           <div>
             {/* Your content goes here */}
             <h2>Bioenergy Generation </h2>
+            <Typography variant={"h4"}>{`UserId: ${userId}`}</Typography>
             <Grid
               container
               xs={12}
@@ -306,4 +307,4 @@ function DashboardUser() {
   );
 }
 
-export default DashboardUser;
+export default UserDetails;
