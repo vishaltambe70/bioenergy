@@ -2,12 +2,20 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../navbar";
 import { useLocation } from "react-router-dom";
-import { Container, Grid, List, ListItem, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import AnimatedNumbers from "react-animated-numbers";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
   ADMIN_ROWS,
@@ -16,7 +24,11 @@ import {
   SARALA_JAIN,
   VIKRAM_SINGH,
 } from "../../constants";
+import { useNavigate } from "react-router-dom";
+
 function UserDetails() {
+  const navigate = useNavigate();
+
   const location = useLocation();
   const { user, userId } = location.state || {};
   console.log("props", user);
@@ -152,6 +164,7 @@ function UserDetails() {
     "Pasteurisation",
   ];
   const [listData, setListData] = useState([]);
+  const [username, setUsername] = useState("");
   const [totalGarbage, setTotalGarbage] = useState(0);
   const [totalBioEnergy, setTotalBioEnergy] = useState(0);
   const [total, setTotal] = useState({});
@@ -165,8 +178,9 @@ function UserDetails() {
   };
 
   const getData = () => {
-    const filteredUser = ADMIN_ROWS.filter((name) => name.userId === user);
+    const filteredUser = ADMIN_ROWS.filter((name) => name.userId === userId);
     console.log("filtered user ", filteredUser);
+    setUsername(filteredUser[0].username);
     let data = [];
     if (filteredUser[0].userId === "kamini_rathod") {
       data = KAMINI_RATHOD;
@@ -197,8 +211,16 @@ function UserDetails() {
   };
   return (
     <>
-      <Navbar />
-
+      <Navbar user="admin" />
+      <Button
+        variant="outlined"
+        startIcon={<ArrowBackIcon />}
+        onClick={() => navigate("/dashboard", { state: { user: "admin" } })}
+        align="left"
+        sx={{ mt: 2, ml: 3, mb: 1, display: "flex", alignContent: "start" }}
+      >
+        back
+      </Button>
       <div
         style={{
           display: "flex",
@@ -233,7 +255,7 @@ function UserDetails() {
           <div>
             {/* Your content goes here */}
             <h2>Bioenergy Generation </h2>
-            <Typography variant={"h4"}>{`UserId: ${userId}`}</Typography>
+            <Typography variant={"h6"}>{`User: ${username}`}</Typography>
             <Grid
               container
               xs={12}
